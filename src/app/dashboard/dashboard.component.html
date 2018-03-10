@@ -1,0 +1,12 @@
+<h2>Dashboard</h2>
+
+<input type="text" #txtinput> 
+<button type="button" (click)="searchMovie(txtinput.value)">Search</button>
+<button type="button" (click)="getMovieDetails(txtinput.value)">Details</button>
+
+<ul>
+    <li *ngFor="let result of results"><div>{{ result.movie.title }}<br/>
+        <img src="{{ result.imageUrl }}">
+    </div>
+    </li>
+</ul>
