@@ -6,7 +6,7 @@ import { TheMovieDbService, TMDBConfig } from '../the-movie-db.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: 'dashboard.component.html',
-  styles: ['dashboard.components.scss']
+  styleUrls: ['dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
 
@@ -25,6 +25,11 @@ export class DashboardComponent implements OnInit {
   searchMovie(keyword: string): void {
     this.trakt.searchMovies(keyword).subscribe((result) => {
       console.dir(result);
+      result.sort(function(a, b){
+        if(a.movie.year < b.movie.year) return 1;
+        else if(a.movie.year > b.movie.year) return -1;
+        else return 0;
+      });
       this.results = result;
       for(let i=0; i<result.length; i++){
         this.tmdb.getMovieDetails(this.results[i].movie.ids.tmdb).subscribe((tmdbResult) => {
@@ -40,5 +45,12 @@ export class DashboardComponent implements OnInit {
     this.trakt.getMovieDetails(id).subscribe((result) => {
       console.dir(result);
     });
+  }
+
+  onKey(event: any) {
+    if(event.charCode == 13){      
+      this.results = null;
+      this.searchMovie(event.target.value);
+    }
   }
 }
