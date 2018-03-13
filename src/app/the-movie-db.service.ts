@@ -23,9 +23,18 @@ export class TheMovieDbService {
     return this.http.get<TMDBConfig>(`${tmdbConfigUrl}${tmdbAPIKey}`, httpOptions);
   }
 
-  getMovieDetails(id: string): any {
-    return this.http.get<any>(`${tmdbUrl}${id}?${tmdbAPIKey}`, httpOptions);
+  getMovieDetails(id: string): Observable<TMDBMovie> {
+    return this.http.get<TMDBMovie>(`${tmdbUrl}${id}?${tmdbAPIKey}`, httpOptions);
   }
+}
+
+export class TMDBMovie {
+  id: number;
+  title: string;
+  adult: boolean;
+  backdrop_path: string;
+  poster_path: string;
+  belongs_to_collection: string;
 }
 
 export class TMDBConfig {

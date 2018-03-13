@@ -13,6 +13,7 @@ import { MovieComponent } from './movie/movie.component';
 import { AppRoutingModule} from './app-routing.module';
 import { NavigationComponent } from './navigation/navigation.component';
 import { SessionService } from './session.service';
+import { MovieLibraryService } from './movie-library.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { SessionService } from './session.service';
     AppRoutingModule,
     AngularFontAwesomeModule
   ],
-  providers: [TraktService, TheMovieDbService, SessionService],
+  providers: [TraktService, TheMovieDbService, SessionService, MovieLibraryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

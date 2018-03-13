@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { SessionService } from '../session.service';
 import { TraktSearchResult } from '../trakt.service';
+import { Movie } from '../Movie.model';
+import { MovieLibraryService } from '../movie-library.service';
 
 enum FormModes {AddMovie, ShowMovie, EditMovie};
 
@@ -20,13 +22,15 @@ export class MovieComponent implements OnInit {
   selectedMovieId: number = 0;
   movieToAdd: TraktSearchResult;
 
+  movie: Movie;
   formTitle: string;
   comment: string;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private session: SessionService
+    private session: SessionService,
+    private library: MovieLibraryService
   ) { }
 
   ngOnInit() {
@@ -38,7 +42,7 @@ export class MovieComponent implements OnInit {
       this.mode = FormModes.AddMovie;
       this.movieToAdd = this.session["selectedMovie"] as TraktSearchResult;
       console.log("Sel Movie: ", this.movieToAdd);
-      this.formTitle = "Add movie:";
+      this.formTitle = `Add movie: ${this.movieToAdd.movie.title}`;
     } else {
       this.selectedMovieId = +this.route.snapshot.paramMap.get('id');
       this.mode = FormModes.ShowMovie;

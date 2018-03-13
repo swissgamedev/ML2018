@@ -38,6 +38,12 @@ export class TraktSearchResult {
 export class TraktMovie {
   title: string;
   year: number;
+  genres: string[];
+  overview: string;
+  rating: number;
+  released: Date;
+  runtime: number;
+  
   ids: {
     imdb: string;
     slug: string;
