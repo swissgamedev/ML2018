@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { TraktService, TraktSearchResult } from '../trakt.service';
 import { Observable } from 'rxjs/Observable';
 import { TheMovieDbService, TMDBConfig } from '../the-movie-db.service';
+import { SessionService } from '../session.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +16,12 @@ export class DashboardComponent implements OnInit {
   results: TraktSearchResult[];
   tmdbConfig: TMDBConfig;
 
-  constructor(private trakt: TraktService, private tmdb: TheMovieDbService) { }
+  constructor(
+    private trakt: TraktService, 
+    private tmdb: TheMovieDbService,
+    private router: Router,
+    private session: SessionService
+  ) { }
 
   ngOnInit() {
     this.tmdb.getConfiguration().subscribe((configResult) => {
@@ -52,5 +60,10 @@ export class DashboardComponent implements OnInit {
       this.results = null;
       this.searchMovie(event.target.value);
     }
+  }
+
+  onSelect(selMovie: TraktSearchResult): void {
+    this.session["selectedMovie"] = selMovie;
+    this.router.navigate(["detail"]);
   }
 }

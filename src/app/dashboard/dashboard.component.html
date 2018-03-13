@@ -12,7 +12,7 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-        <div *ngFor="let result of results" class="col-md-2 text-center card m-2 hoverable"><div><div  class="card-title">{{ result.movie.title }}</div>
+        <div *ngFor="let result of results" class="col-md-2 text-center card m-2 hoverable" (click)="onSelect(result)"><div><div  class="card-title">{{ result.movie.title }}</div>
             <fa name="spinner" animation="spin" *ngIf="!result.imageUrl"></fa>
             <img class="img-responsive text-center" src="{{ result.imageUrl }}"><br/>
             <span>{{ result.movie.year }}</span>
