@@ -6,12 +6,10 @@
     </div>
     <div class="card-body m-l-1">
         <input type="text" #txtinput (keypress)="onKey($event)" appAutofocus> 
-        <button type="button" (click)="searchMovie(txtinput.value)" class="btn btn-primary">Search</button>
-        <button type="button" (click)="getMovieDetails(txtinput.value)">Details</button>
+        <button type="button" (click)="searchMovie(txtinput.value)" class="btn btn-primary" [disabled]="searching">Search<fa *ngIf="searching" name="spinner" animation="spin" style="margin-left:5px"></fa></button>
     </div>
 </div>
-<div class="container-fluid">
-    <span *ngIf="searching"><fa name="spinner" animation="spin" *ngIf="!result.imageUrl"></fa></span>
+<div class="container-fluid">    
     <div class="row">
         <div *ngFor="let result of results" class="col-md-2 text-center card m-2 hoverable" (click)="onSelect(result)"><div><div  class="card-title">{{ result.movie.title }}</div>
             <fa name="spinner" animation="spin" *ngIf="!result.imageUrl"></fa>
