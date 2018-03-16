@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
 
   results: TraktSearchResult[];
   tmdbConfig: TMDBConfig;
+  searching: boolean = false;
 
   constructor(
     private trakt: TraktService, 
@@ -31,6 +32,7 @@ export class DashboardComponent implements OnInit {
   }
 
   searchMovie(keyword: string): void {
+    this.searching = true;
     this.trakt.searchMovies(keyword).subscribe((result) => {
       console.dir(result);
       result.sort(function(a, b){
@@ -38,6 +40,7 @@ export class DashboardComponent implements OnInit {
         else if(a.movie.year > b.movie.year) return -1;
         else return 0;
       });
+      this.searching = false;
       this.results = result;
       for(let i=0; i<result.length; i++){
         this.tmdb.getMovieDetails(this.results[i].movie.ids.tmdb).subscribe((tmdbResult) => {

@@ -14,13 +14,15 @@ import { AppRoutingModule} from './app-routing.module';
 import { NavigationComponent } from './navigation/navigation.component';
 import { SessionService } from './session.service';
 import { MovieLibraryService } from './movie-library.service';
+import { AutofocusDirective } from './autofocus.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     MovieComponent,
-    NavigationComponent    
+    NavigationComponent,
+    AutofocusDirective    
   ],
   imports: [
     BrowserModule,
