@@ -1,14 +1,15 @@
 <h2>Dashboard</h2>
-
+<img [src]="placeholderImage"><img src="assets/favicon.ico"><br/>
 <div class="card">
     <div class="card-heading m-2">
         <h3>Search movie</h3>
     </div>
     <div class="card-body m-l-1">
         <input type="text" #txtinput (keypress)="onKey($event)" appAutofocus> 
-        <button type="button" (click)="searchMovie(txtinput.value)" class="btn btn-primary" [disabled]="searching">Search<fa *ngIf="searching" name="spinner" animation="spin" style="margin-left:5px"></fa></button>
+        <button type="button" (click)="searchMovie(txtinput.value)" class="btn btn-primary" [disabled]="searching">Search{{searching?'ing...':''}}<fa *ngIf="searching" name="spinner" animation="spin" style="margin-left:5px"></fa></button>
     </div>
 </div>
+<div id="divErrors" *ngIf="errors" class="m-2 font-weight-bold">{{ errors }}</div>
 <div class="container-fluid">    
     <div class="row">
         <div *ngFor="let result of results" class="col-md-2 text-center card m-2 hoverable" (click)="onSelect(result)"><div><div  class="card-title">{{ result.movie.title }}</div>

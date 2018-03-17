@@ -13,9 +13,12 @@ import { SessionService } from '../session.service';
 })
 export class DashboardComponent implements OnInit {
 
+  readonly placeholderImage: string = '../assets/images/placeholder.png';
+
   results: TraktSearchResult[];
   tmdbConfig: TMDBConfig;
   searching: boolean = false;
+  errors: string = '';
 
   constructor(
     private trakt: TraktService, 
@@ -27,14 +30,19 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.tmdb.getConfiguration().subscribe((configResult) => {
       this.tmdbConfig = configResult;
-      console.dir(this.tmdbConfig);
+      if(!this.tmdbConfig){
+        this.errors += `The Movie DB didn't return it's configuration. No pictures will be shown.`;
+      }
     });
   }
 
   searchMovie(keyword: string): void {
     this.searching = true;
     this.trakt.searchMovies(keyword).subscribe((result) => {
-      console.dir(result);
+      //console.dir(result);
+      if(!result || result.length===0){
+        this.errors += `No movies were found for keyword '${keyword}'`;
+      }
       result.sort(function(a, b){
         if(a.movie.year < b.movie.year) return 1;
         else if(a.movie.year > b.movie.year) return -1;
@@ -44,9 +52,14 @@ export class DashboardComponent implements OnInit {
       this.results = result;
       for(let i=0; i<result.length; i++){
         this.tmdb.getMovieDetails(this.results[i].movie.ids.tmdb).subscribe((tmdbResult) => {
-          console.dir(tmdbResult);
-          console.log(this.tmdbConfig.images.base_url+this.tmdbConfig.images.poster_sizes[0]+tmdbResult.poster_path);
-          this.results[i].imageUrl = this.tmdbConfig.images.base_url+this.tmdbConfig.images.poster_sizes[0]+tmdbResult.poster_path;
+          // console.dir(tmdbResult);
+          // console.log(this.tmdbConfig.images.base_url+this.tmdbConfig.images.poster_sizes[0]+tmdbResult.poster_path);
+          if(tmdbResult){
+            this.results[i].imageUrl = this.tmdbConfig.images.base_url+this.tmdbConfig.images.poster_sizes[0]+tmdbResult.poster_path;
+          } else {
+            // todo: placeholder image
+            this.results[i].imageUrl = "assets/images/movie-placeholder.png";
+          }
         });
       }
     });
