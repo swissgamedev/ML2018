@@ -12,10 +12,14 @@
 <div id="divErrors" *ngIf="errors" class="m-2 font-weight-bold">{{ errors }}</div>
 <div class="container-fluid">    
     <div class="row">
-        <div *ngFor="let result of results" class="col-md-2 text-center card m-2 hoverable" (click)="onSelect(result)"><div><div  class="card-title">{{ result.movie.title }}</div>
-            <fa name="spinner" animation="spin" *ngIf="!result.imageUrl"></fa>
-            <img class="img-responsive text-center" src="{{ result.imageUrl }}"><br/>
-            <span>{{ result.movie.year }}</span>
+        <div *ngFor="let result of results" class="col-md-2 text-center card m-2 hoverable" (click)="onSelect(result)">
+        <div class="moviepanel">
+            <div  class="card-title">{{ result.movie.title }}</div>
+            <div class="imagebottom">
+                <fa name="spinner" animation="spin" *ngIf="!result.imageUrl"></fa>
+                <img class="img-responsive text-center" src="{{ result.imageUrl }}" width="92"><br/>
+                <span>{{ result.movie.year }}</span>
+            </div>
         </div>
     </div>
 </div>

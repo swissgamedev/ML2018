@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
             this.results[i].imageUrl = this.tmdbConfig.images.base_url+this.tmdbConfig.images.poster_sizes[0]+tmdbResult.poster_path;
           } else {
             // todo: placeholder image
-            this.results[i].imageUrl = "";
+            this.results[i].imageUrl = "assets/images/placeholder.png";
           }
         });
       }
